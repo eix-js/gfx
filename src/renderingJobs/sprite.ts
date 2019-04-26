@@ -14,7 +14,7 @@ export interface spriteComponent {
 /**
  * sprite rendering job. renders entities with the spriteComponent component.
  */
-export const spriteRenderingJob = ([env, backend]: [ECS, Renderer]) => {
+export const spriteRenderingJob = ([env, backend]: [ECS, Renderer<any, any>]) => {
     // get all sprites
     const sprites = env.all
         .has("sprite")

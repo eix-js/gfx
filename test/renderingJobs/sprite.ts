@@ -13,8 +13,9 @@ describe("Test sprite", () => {
     // create job system
     const jobSystem = new JobSystem()
     // create renderer
-    let renderer: Renderer = {
-        drawImage: (_id, _image, _position) => { }
+    let renderer: Renderer<void, null> = {
+        drawImage: (_id, _image, _position) => { },
+        canvas: null
     }
     // create render task
     jobSystem.addTask("draw", [ecs, renderer])
@@ -40,7 +41,8 @@ describe("Test sprite", () => {
             drawImage: (_id, _image, position: vec2) => {
                 expect(position[0]).to.be.eq(x)
                 expect(position[0]).to.be.eq(y)
-            }
+            },
+            canvas: null
         }
         // recreate render task
         jobSystem.addTask("draw", [ecs, renderer])
