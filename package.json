@@ -20,5 +20,10 @@
     "@types/node": "^11.13.7",
     "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "@eix/core": "git+https://github.com/eix-js/core.git",
+    "@types/gl-matrix": "^2.4.5",
+    "gl-matrix": "^3.0.0"
   }
 }
