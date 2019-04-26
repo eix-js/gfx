@@ -2,6 +2,7 @@ import { spriteRenderingJob } from "../../src/main"
 import { Renderer } from "../../src/Renderer"
 import { ECS, JobSystem } from "@eix/core"
 import { vec2 } from "gl-matrix";
+import { expect } from "chai"
 
 // ugly stuff
 class HTMLImageElement { }
@@ -12,8 +13,8 @@ describe("Test sprite", () => {
     // create job system
     const jobSystem = new JobSystem()
     // create renderer
-    const renderer: Renderer = {
-        drawImage: (id, image, position) => { }
+    let renderer: Renderer = {
+        drawImage: (_id, _image, _position) => { }
     }
     // create render task
     jobSystem.addTask("draw", [ecs, renderer])
@@ -28,6 +29,24 @@ describe("Test sprite", () => {
             position: vec2.set(vec2.create(), 0, 0),
             image: new HTMLImageElement()
         }
+        jobSystem.tasks.draw.runJobs([])
+    })
+    it("should be able to able to use the right position", () => {
+        // pick random numbers for coordinates
+        const x = Math.random()
+        const y = Math.random()
+        // create new renderer
+        renderer = {
+            drawImage: (_id, _image, position: vec2) => {
+                expect(position[0]).to.be.eq(x)
+                expect(position[0]).to.be.eq(y)
+            }
+        }
+        // recreate render task
+        jobSystem.addTask("draw", [ecs, renderer])
+        // set entity position
+        ecs.entities[0].sprite = vec2.set(vec2.create(), x, y)
+        // run jobs
         jobSystem.tasks.draw.runJobs([])
     })
 })
