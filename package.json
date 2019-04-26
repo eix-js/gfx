@@ -1,0 +1,24 @@
+{
+  "name": "@eix/gfx",
+  "version": "1.0.0",
+  "description": "Graphics rendering system for the eix game engine.",
+  "main": "dist/main",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eix-js/gfx.git"
+  },
+  "author": "neverix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eix-js/gfx/issues"
+  },
+  "homepage": "https://github.com/eix-js/gfx#readme",
+  "devDependencies": {
+    "@types/node": "^11.13.7",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
+  }
+}
