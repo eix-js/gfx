@@ -26,9 +26,9 @@ describe("Test sprite", () => {
     it("should be able to able to run the job with one sprite", () => {
         ecs.addEntity()
         ecs.entities[0].sprite = {
-            position: vec2.set(vec2.create(), 0, 0),
             image: new HTMLImageElement()
         }
+        ecs.entities[0].position = vec2.set(vec2.create(), 0, 0)
         jobSystem.tasks.draw.runJobs([])
     })
     it("should be able to able to use the right position", () => {
@@ -45,7 +45,7 @@ describe("Test sprite", () => {
         // recreate render task
         jobSystem.addTask("draw", [ecs, renderer])
         // set entity position
-        ecs.entities[0].sprite = vec2.set(vec2.create(), x, y)
+        ecs.entities[0].position = vec2.set(vec2.create(), x, y)
         // run jobs
         jobSystem.tasks.draw.runJobs([])
     })

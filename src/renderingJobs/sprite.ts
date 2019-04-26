@@ -9,10 +9,6 @@ export interface spriteComponent {
      * sprite's image
      */
     image: HTMLImageElement
-    /**
-     * sprite's position
-     */
-    position: vec2
 }
 
 /**
@@ -22,13 +18,16 @@ export const spriteRenderingJob = ([env, backend]: [ECS, Renderer]) => {
     // get all sprites
     const sprites = env.all
         .has("sprite")
-        .get("sprite")
+        .get("sprite", "position")
 
     return () => {
         sprites.tracked.forEach((component) => {
+            // get components
             const sprite: spriteComponent = component["sprite"]
+            const position: vec2 = component["position"]
             const id = component[idKey]
-            backend.drawImage(id, sprite.image, sprite.position)
+            // draw it
+            backend.drawImage(id, sprite.image, position)
         })
     }
 }
