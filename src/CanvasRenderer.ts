@@ -7,7 +7,11 @@ export class CanvasRenderer {
         this.ctx = canvas.getContext("2d")
     }
 
-    drawImage(id: number, image: spriteComponent, position: vec2): void {
-        this.ctx.drawImage(image.image, position[0], position[1])
+    drawImage(id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number): void {
+        this.ctx.save()
+        this.ctx.translate(position[0], position[1])
+        this.ctx.rotate(rotation)
+        this.ctx.drawImage(image.image, 0, 0, scale[0], scale[1])
+        this.ctx.restore()
     }
 }
