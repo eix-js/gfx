@@ -15,18 +15,20 @@ export interface spriteComponent {
  * sprite rendering job. renders entities with the spriteComponent component.
  */
 export const spriteRenderingJob = ([env, backend]: [ECS, Renderer]) => {
+    const components = env.all
+        .has("sprite", "position", "scale", "rotation")
+        .get("sprite", "position", "scale", "rotation")
+
     return () => {
-        env.all
-            .has("sprite", "position", "scale", "rotation")
-            .get("sprite", "position", "scale", "rotation").tracked.forEach(component => {
-                // get components
-                const sprite: spriteComponent = component.sprite
-                const position: vec2 = component.position
-                const scale: vec2 = component.scale
-                const rotation: number = component.rotation
-                const id = component[idKey]
-                // draw it
-                backend.drawImage(id, sprite, position, scale, rotation)
-            })
+        components.tracked.forEach(component => {
+            // get components
+            const sprite: spriteComponent = component.sprite
+            const position: vec2 = component.position
+            const scale: vec2 = component.scale
+            const rotation: number = component.rotation
+            const id = component[idKey]
+            // draw it
+            backend.drawImage(id, sprite, position, scale, rotation)
+        })
     }
 }

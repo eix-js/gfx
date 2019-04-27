@@ -26,24 +26,21 @@ describe("Test sprite", () => {
     })
     it("should be able to able to run the job with one sprite", (done) => {
         // create entity
-        ecs.addEntity()
-        ecs.entities[0].position = 1
-        ecs.entities[0].sprite = 1
-        ecs.entities[0].rotation = 1
-        ecs.entities[0].scale = 1
+        ecs.addEntityFlowGroup()
+            .addComponent("position", vec2.set(vec2.create(), 0, 0))
+            .addComponent("sprite", 1)
+            .addComponent("rotation", 0)
+            .addComponent("scale", vec2.set(vec2.create(), 0, 0))
+
         const entity = ecs.all
             .has("position", "sprite", "scale", "rotation")
             .get("position", "sprite", "scale", "rotation")
             .tracked[0]
+
         entity.sprite = {
             image: new HTMLImageElement()
         }
-        entity.position = vec2.set(vec2.create(), 0, 0)
-        entity.scale = vec2.set(vec2.create(), 0, 0)
-        entity.rotation = 0
-        ecs.entities[0] = entity
-        // emit changes
-        ecs.emit("change")
+
         // create renderer
         let renderer: Renderer = {
             drawImage: (id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number) => {
@@ -67,24 +64,18 @@ describe("Test sprite", () => {
         // pick random numbers for scale
         const sX = Math.random()
         const sY = Math.random()
-        // create entity
-        ecs.entities[0].position = 1
-        ecs.entities[0].sprite = 1
-        ecs.entities[0].rotation = 1
-        ecs.entities[0].scale = 1
+
         const entity = ecs.all
-            .has("position", "sprite", "scale", "rotation")
             .get("position", "sprite", "scale", "rotation")
             .tracked[0]
+
         entity.sprite = {
             image: new HTMLImageElement()
         }
         entity.position = vec2.set(vec2.create(), x, y)
         entity.scale = vec2.set(vec2.create(), sX, sY)
         entity.rotation = r
-        ecs.entities[0] = entity
-        // emit changes
-        ecs.emit("change")
+
         // create new renderer
         renderer = {
             drawImage: (id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number) => {
