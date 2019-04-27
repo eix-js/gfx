@@ -1,7 +1,8 @@
 import { vec2 } from "gl-matrix"
+import { spriteComponent } from "./renderingJobs/sprite"
 
 export class CanvasRenderer {
-    drawImage(id: number, image: HTMLImageElement, position: vec2): void {
+    drawImage(id: number, image: spriteComponent, position: vec2): void {
         // TODO
     }
 }

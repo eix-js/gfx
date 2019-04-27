@@ -1,4 +1,4 @@
-import { spriteRenderingJob } from "../../src/main"
+import { spriteRenderingJob, spriteComponent } from "../../src/main"
 import { Renderer } from "../../src/Renderer"
 import { ECS, JobSystem } from "@eix/core"
 import { vec2 } from "gl-matrix";
@@ -13,8 +13,8 @@ describe("Test sprite", () => {
     // create job system
     const jobSystem = new JobSystem()
     // create renderer
-    let renderer: Renderer<void, null> = {
-        drawImage: (_id, _image, _position) => { },
+    let renderer: Renderer = {
+        drawImage: () => { },
         canvas: null
     }
     // create render task
@@ -24,30 +24,82 @@ describe("Test sprite", () => {
     it("should be able to run the job with no sprites", () => {
         jobSystem.tasks.draw.runJobs([])
     })
-    it("should be able to able to run the job with one sprite", () => {
+    it("should be able to able to run the job with one sprite", (done) => {
+        // create entity
         ecs.addEntity()
-        ecs.entities[0].sprite = {
+        ecs.entities[0].position = 1
+        ecs.entities[0].sprite = 1
+        ecs.entities[0].rotation = 1
+        ecs.entities[0].scale = 1
+        const entity = ecs.all
+            .has("position", "sprite", "scale", "rotation")
+            .get("position", "sprite", "scale", "rotation")
+            .tracked[0]
+        entity.sprite = {
             image: new HTMLImageElement()
         }
-        ecs.entities[0].position = vec2.set(vec2.create(), 0, 0)
-        jobSystem.tasks.draw.runJobs([])
-    })
-    it("should be able to able to use the right position", () => {
-        // pick random numbers for coordinates
-        const x = Math.random()
-        const y = Math.random()
-        // create new renderer
-        renderer = {
-            drawImage: (_id, _image, position: vec2) => {
-                expect(position[0]).to.be.eq(x)
-                expect(position[0]).to.be.eq(y)
+        entity.position = vec2.set(vec2.create(), 0, 0)
+        entity.scale = vec2.set(vec2.create(), 0, 0)
+        entity.rotation = 0
+        ecs.entities[0] = entity
+        // emit changes
+        ecs.emit("change")
+        // create renderer
+        let renderer: Renderer = {
+            drawImage: (id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number) => {
+                done()
             },
             canvas: null
         }
-        // recreate render task
-        jobSystem.addTask("draw", [ecs, renderer])
-        // set entity position
-        ecs.entities[0].position = vec2.set(vec2.create(), x, y)
+        // create render task
+        jobSystem.tasks.draw.setArgs([ecs, renderer])
+        // add sprite renderer to the task
+        jobSystem.tasks.draw.addJob("spriteRenderer", spriteRenderingJob)
+        // run jobs
+        jobSystem.tasks.draw.runJobs([])
+    })
+    it("should be able to able to use the right position, rotation and scale", (done) => {
+        // pick random numbers for coordinates
+        const x = Math.random()
+        const y = Math.random()
+        // pick random numbers for rotation
+        const r = Math.random()
+        // pick random numbers for scale
+        const sX = Math.random()
+        const sY = Math.random()
+        // create entity
+        ecs.entities[0].position = 1
+        ecs.entities[0].sprite = 1
+        ecs.entities[0].rotation = 1
+        ecs.entities[0].scale = 1
+        const entity = ecs.all
+            .has("position", "sprite", "scale", "rotation")
+            .get("position", "sprite", "scale", "rotation")
+            .tracked[0]
+        entity.sprite = {
+            image: new HTMLImageElement()
+        }
+        entity.position = vec2.set(vec2.create(), x, y)
+        entity.scale = vec2.set(vec2.create(), sX, sY)
+        entity.rotation = r
+        ecs.entities[0] = entity
+        // emit changes
+        ecs.emit("change")
+        // create new renderer
+        renderer = {
+            drawImage: (id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number) => {
+                expect(position[0]).to.be.approximately(x, 0.01)
+                expect(position[1]).to.be.approximately(y, 0.01)
+                expect(scale[0]).to.be.approximately(sX, 0.01)
+                expect(scale[1]).to.be.approximately(sY, 0.01)
+                expect(rotation).to.be.approximately(r, 0.01)
+                done()
+            },
+            canvas: null
+        }
+        jobSystem.tasks.draw.setArgs([ecs, renderer])
+        // add sprite renderer to the task
+        jobSystem.tasks.draw.addJob("spriteRenderer", spriteRenderingJob)
         // run jobs
         jobSystem.tasks.draw.runJobs([])
     })
