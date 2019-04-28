@@ -15,6 +15,9 @@ export class CanvasRenderer implements Renderer {
     }
 
     drawDrawable(_id: number, drawable: Drawable) {
+        if(!this.toDraw[drawable.layer]) {
+            this.toDraw[drawable.layer] = []
+        }
         this.toDraw[drawable.layer].push(drawable)
     }
 
