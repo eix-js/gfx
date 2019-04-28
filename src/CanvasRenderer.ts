@@ -1,4 +1,4 @@
-import { vec2 } from "gl-matrix"
+import { vec2, vec3 } from "gl-matrix"
 import { spriteComponent } from "./renderingJobs/sprite"
 import { Renderer } from "./Renderer";
 import { RendererInfo } from "./RendererInfo"
@@ -6,12 +6,18 @@ import { RendererInfo } from "./RendererInfo"
 export class CanvasRenderer implements Renderer {
     private ctx: CanvasRenderingContext2D
     rendererInfo: RendererInfo
+
     constructor(public canvas: HTMLCanvasElement) {
         this.ctx = canvas.getContext("2d")
         this.rendererInfo = new CanvasRendererInfo(this.canvas)
     }
 
-    drawImage(id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number): void {
+    drawRect(color: vec3, position: vec2, scale: vec2, rotation: number) {
+        this.ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+        this.ctx.fillRect(position[0], position[1], scale[0], scale[1])
+    }
+
+    drawImage(_id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number): void {
         this.ctx.save()
         this.ctx.translate(position[0], position[1])
         this.ctx.rotate(rotation)

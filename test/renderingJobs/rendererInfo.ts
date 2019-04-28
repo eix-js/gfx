@@ -17,6 +17,7 @@ describe("Test RendererInfo", () => {
     // create renderer
     let renderer: Renderer = {
         drawImage: () => { },
+        drawRect: () => { },
         rendererInfo: {
             width,
             height
