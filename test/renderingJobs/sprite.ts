@@ -15,6 +15,10 @@ describe("Test sprite", () => {
     // create renderer
     let renderer: Renderer = {
         drawImage: () => { },
+        rendererInfo: {
+            width: 100,
+            height: 100
+        },
         canvas: null
     }
     // create render task
@@ -45,6 +49,10 @@ describe("Test sprite", () => {
         let renderer: Renderer = {
             drawImage: (id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number) => {
                 done()
+            },
+            rendererInfo: {
+                width: 100,
+                height: 100
             },
             canvas: null
         }
@@ -85,6 +93,10 @@ describe("Test sprite", () => {
                 expect(scale[1]).to.be.approximately(sY, 0.01)
                 expect(rotation).to.be.approximately(r, 0.01)
                 done()
+            },
+            rendererInfo: {
+                width: 100,
+                height: 100
             },
             canvas: null
         }

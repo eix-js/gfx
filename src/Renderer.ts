@@ -1,5 +1,6 @@
 import { vec2 } from "gl-matrix"
-import { spriteComponent } from "./renderingJobs/sprite";
+import { spriteComponent } from "./renderingJobs/sprite"
+import { RendererInfo } from "./RendererInfo"
 
 export interface Renderer {
     /**
@@ -11,6 +12,10 @@ export interface Renderer {
      * @param rotation rotation of the image
      */
     drawImage(id: number, image: spriteComponent, position: vec2, scale: vec2, rotation: number): void
+    /**
+     * get the renderer info
+     */
+    rendererInfo: RendererInfo
     /**
      * get the underlying HTML element
      */
