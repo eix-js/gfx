@@ -6,7 +6,7 @@ import { RendererInfo } from "../interfaces/RendererInfo"
 export class CanvasRenderer implements Renderer {
     private ctx: CanvasRenderingContext2D
     rendererInfo: RendererInfo
-    private toDraw: { [layer: number]: Drawable[] }
+    private toDraw: { [layer: number]: Drawable[] } = {}
 
     constructor(public canvas: HTMLCanvasElement) {
         this.ctx = canvas.getContext("2d")
