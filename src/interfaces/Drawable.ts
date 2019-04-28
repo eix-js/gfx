@@ -29,10 +29,12 @@ interface Drawable {
 type DrawableContent = Rect | Sprite
 
 interface Rect {
+    type: "rect"
     color: vec3
 }
 
 interface Sprite {
+    type: "sprite"
     image: HTMLImageElement
 }
 

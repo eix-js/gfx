@@ -56,7 +56,8 @@ describe("Test drawableRenderer", () => {
     const rectB = random(0, 1)
     // add drawable content
     let drawableContent: DrawableContent = {
-        color: vec3.fromValues(rectR, rectG, rectB)
+        color: vec3.fromValues(rectR, rectG, rectB),
+        type: "rect"
     }
 
     it("should render with one drawable entity (rect)", (done) => {
@@ -127,7 +128,7 @@ describe("Test drawableRenderer", () => {
     // generate random image (placeholder)
     const image = random(-1000, 1000) as unknown as HTMLImageElement
     // add drawable content
-    let drawableContentSprite: Sprite = { image }
+    let drawableContentSprite: Sprite = { image, type: "sprite" }
 
     it("should render with one drawable entity (sprite)", (done) => {
         // remove the existing entity
