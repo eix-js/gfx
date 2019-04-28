@@ -1,12 +1,11 @@
 import { rendererInfoJob } from "../../src/main"
-import { Renderer } from "../../src/Renderer"
+import { Renderer } from "../../src/main"
 import { ECS, JobSystem } from "@eix/core"
-import { vec2 } from "gl-matrix";
 import { expect } from "chai"
-import { RendererInfo } from "../../src/RendererInfo";
+import { RendererInfo } from "../../src/main"
 
 
-describe("Test RendererInfo", () => {
+describe("Test rendererInfo", () => {
     // pick random width and height
     const width = Math.floor(Math.random() * 200 + 200)
     const height = Math.floor(Math.random() * 200 + 200)
@@ -16,12 +15,10 @@ describe("Test RendererInfo", () => {
     const jobSystem = new JobSystem()
     // create renderer
     let renderer: Renderer = {
-        drawImage: () => { },
-        drawRect: () => { },
-        rendererInfo: {
-            width,
-            height
-        },
+        drawDrawable: () => { },
+        draw: () => { },
+        clear: () => { },
+        rendererInfo: { width, height },
         canvas: null
     }
     // add draw task

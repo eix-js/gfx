@@ -1,4 +1,4 @@
-import { Renderer } from "../Renderer"
+import { Renderer } from "../interfaces/Renderer"
 import { ECS, idKey } from "@eix/core"
 
 /**
