@@ -17,8 +17,8 @@ export class CanvasRenderer implements Renderer {
     }
 
     drawDrawable(_id: number, drawable: Drawable) {
-        if(drawFrame != frame) {
-            drawFrame = frame
+        if(this.drawFrame != this.frame) {
+            this.drawFrame = this.frame
             this.toDraw[drawable.layer] = []
         }
         this.toDraw[drawable.layer].push(drawable)
@@ -46,7 +46,7 @@ export class CanvasRenderer implements Renderer {
                 this.ctx.restore()
             }
         }
-        frame++
+        this.frame++
     }
 
     clear() {
