@@ -7,6 +7,8 @@ export class CanvasRenderer implements Renderer {
     private ctx: CanvasRenderingContext2D
     rendererInfo: RendererInfo
     private toDraw: { [layer: number]: Drawable[] } = {}
+    private frame: number = 0
+    private drawFrame: number = -1
 
     constructor(public canvas: HTMLCanvasElement) {
         this.ctx = canvas.getContext("2d")
@@ -15,7 +17,8 @@ export class CanvasRenderer implements Renderer {
     }
 
     drawDrawable(_id: number, drawable: Drawable) {
-        if (!this.toDraw[drawable.layer]) {
+        if(drawFrame != frame) {
+            drawFrame = frame
             this.toDraw[drawable.layer] = []
         }
         this.toDraw[drawable.layer].push(drawable)
@@ -43,6 +46,7 @@ export class CanvasRenderer implements Renderer {
                 this.ctx.restore()
             }
         }
+        frame++
     }
 
     clear() {
