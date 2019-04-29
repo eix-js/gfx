@@ -7,7 +7,7 @@ import { Drawable } from "../interfaces/Drawable";
  */
 export const drawableRenderer = ([env, backend]: [ECS, Renderer]) => {
     let tracked = env.all.has("drawable").get("drawable").tracked
-    ecs.on("update", () => {
+    env.on("update", () => {
         tracked = env.all.has("drawable").get("drawable").tracked
     })
     return () => {
