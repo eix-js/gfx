@@ -24,25 +24,29 @@ export class CanvasRenderer implements Renderer {
     draw() {
         for (const layer in this.toDraw) {
             for (const drawable of this.toDraw[layer]) {
-                this.ctx.save()
-                this.ctx.translate(drawable.position[0], drawable.position[1])
-                this.ctx.rotate(drawable.rotation)
-                switch (drawable.drawableContent.type) {
-                    case "rect":
-                        const color = drawable.drawableContent.color
-                        this.ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
-                        this.ctx.fillRect(0, 0, drawable.scale[0], drawable.scale[1])
-                        break
-                    case "sprite":
-                        this.ctx.drawImage(
-                            drawable.drawableContent.image,
-                            0, 0,
-                            drawable.scale[0], drawable.scale[1])
-                        break
-                }
-                this.ctx.restore()
+                this.drawDrawableCanvas(drawable)
             }
         }
+    }
+
+    private drawDrawableCanvas(drawable: Drawable) {
+        this.ctx.save()
+        this.ctx.translate(drawable.position[0], drawable.position[1])
+        this.ctx.rotate(drawable.rotation)
+        switch (drawable.drawableContent.type) {
+            case "rect":
+                const color = drawable.drawableContent.color
+                this.ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+                this.ctx.fillRect(0, 0, drawable.scale[0], drawable.scale[1])
+                break
+            case "sprite":
+                this.ctx.drawImage(
+                    drawable.drawableContent.image,
+                    0, 0,
+                    drawable.scale[0], drawable.scale[1])
+                break
+        }
+        this.ctx.restore()
     }
 
     clear() {
