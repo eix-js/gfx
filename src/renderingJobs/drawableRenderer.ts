@@ -10,6 +10,12 @@ export const drawableRenderer = ([env, backend]: [ECS, Renderer]) => {
     env.on("update", () => {
         tracked = env.all.has("drawable").get("drawable").tracked
     })
+    env.on("newEntity", () => {
+        tracked = env.all.has("drawable").get("drawable").tracked
+    })
+    env.on("entityDeleted", () => {
+        tracked = env.all.has("drawable").get("drawable").tracked
+    })
     return () => {
         tracked.forEach((component: any) => {
             // get components
