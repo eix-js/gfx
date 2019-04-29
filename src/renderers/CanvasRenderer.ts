@@ -6,7 +6,7 @@ import { RendererInfo } from "../interfaces/RendererInfo"
 export class CanvasRenderer implements Renderer {
     private ctx: CanvasRenderingContext2D
     rendererInfo: RendererInfo
-    private toDraw: { [layer: number]: Drawable[] } = {}
+    private toDraw: Drawable[][] = []
     private frame: number = 0
     private drawFrame: number = -1
 
@@ -17,7 +17,7 @@ export class CanvasRenderer implements Renderer {
     }
 
     drawDrawable(_id: number, drawable: Drawable) {
-        if(this.drawFrame != this.frame) {
+        if (this.drawFrame != this.frame) {
             this.drawFrame = this.frame
             this.toDraw[drawable.layer] = []
         }
@@ -25,11 +25,11 @@ export class CanvasRenderer implements Renderer {
     }
 
     draw() {
-        for (const layer in this.toDraw) {
-            for (const drawable of this.toDraw[layer]) {
+        this.toDraw.forEach(layer => {
+            layer.forEach(drawable => {
                 this.drawDrawableCanvas(drawable)
-            }
-        }
+            })
+        })
         this.frame++
     }
 
@@ -40,7 +40,7 @@ export class CanvasRenderer implements Renderer {
         switch (drawable.drawableContent.type) {
             case "rect":
                 const color = drawable.drawableContent.color
-                this.ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+                this.ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`
                 this.ctx.fillRect(0, 0, drawable.scale[0], drawable.scale[1])
                 break
             case "sprite":
