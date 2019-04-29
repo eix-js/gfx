@@ -6,12 +6,8 @@ import { Drawable } from "../interfaces/Drawable";
  * drawable rendering job, renders entities with the drawable component.
  */
 export const drawableRenderer = ([env, backend]: [ECS, Renderer]) => {
-    // get all drawables
-    const components = env.all
-        .has("drawable").get("drawable")
-
     return () => {
-        components.tracked.forEach(component => {
+        env.all.has("drawable").get("drawable").forEach(component => {
             // get components
             const drawable: Drawable = component.drawable
             const id = component[idKey]
