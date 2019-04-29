@@ -40,7 +40,7 @@ export class CanvasRenderer implements Renderer {
         switch (drawable.drawableContent.type) {
             case "rect":
                 const color = drawable.drawableContent.color
-                this.ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`
+                this.ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
                 this.ctx.fillRect(0, 0, drawable.scale[0], drawable.scale[1])
                 break
             case "sprite":
