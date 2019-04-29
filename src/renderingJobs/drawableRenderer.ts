@@ -7,7 +7,7 @@ import { Drawable } from "../interfaces/Drawable";
  */
 export const drawableRenderer = ([env, backend]: [ECS, Renderer]) => {
     return () => {
-        env.all.has("drawable").get("drawable").forEach(component => {
+        env.all.has("drawable").get("drawable").tracked.forEach(component => {
             // get components
             const drawable: Drawable = component.drawable
             const id = component[idKey]
