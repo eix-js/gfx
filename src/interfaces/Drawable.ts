@@ -26,7 +26,7 @@ interface Drawable {
     drawableContent: DrawableContent
 }
 
-type DrawableContent = Rect | Sprite
+type DrawableContent = Rect | Sprite | Text
 
 interface Rect {
     type: "rect"
@@ -38,4 +38,12 @@ interface Sprite {
     image: HTMLImageElement
 }
 
-export { Drawable, DrawableContent, Rect, Sprite }
+interface Text {
+    type: "text"
+    text: string,
+    color: vec3,
+    font: string,
+    textAlign: CanvasTextAlign
+}
+
+export { Drawable, DrawableContent, Rect, Sprite, Text }

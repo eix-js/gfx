@@ -37,9 +37,10 @@ export class CanvasRenderer implements Renderer {
         this.ctx.save()
         this.ctx.translate(drawable.position[0], drawable.position[1])
         this.ctx.rotate(drawable.rotation)
+        let color: vec3
         switch (drawable.drawableContent.type) {
             case "rect":
-                const color = drawable.drawableContent.color
+                color = drawable.drawableContent.color
                 this.ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`
                 this.ctx.fillRect(0, 0, drawable.scale[0], drawable.scale[1])
                 break
@@ -49,6 +50,17 @@ export class CanvasRenderer implements Renderer {
                     0, 0,
                     drawable.scale[0], drawable.scale[1])
                 break
+            case "text":
+                this.ctx.textAlign = drawable.drawableContent.textAlign
+                this.ctx.font = drawable.drawableContent.font
+                color = drawable.drawableContent.color
+                this.ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`
+                this.ctx.fillText(
+                    drawable.drawableContent.text,
+                    drawable.position[0], drawable.position[1],
+                    drawable.scale[0])
+                break
+
         }
         this.ctx.restore()
     }
